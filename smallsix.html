@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小六壬 · 雙宮合參 · 詳解</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', '微軟正黑體', 'Apple LiGothic', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #f7f3e6 0%, #e8e0d0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 16px;
+        }
+        .card {
+            max-width: 820px;
+            width: 100%;
+            background: rgba(255, 248, 235, 0.95);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 32px 28px;
+            border: 2px solid #dbbd9a;
+            transition: all 0.2s ease;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #4a2e1f;
+            margin: 0 0 8px 0;
+            letter-spacing: 6px;
+            text-shadow: 2px 2px 0 #e9c9a9;
+        }
+        .subhead {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #7b5a42;
+            margin-bottom: 32px;
+            font-style: italic;
+            border-bottom: 1px dashed #cbad84;
+            padding-bottom: 12px;
+        }
+        .input-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .input-group {
+            flex: 1 1 100px;
+            min-width: 80px;
+            text-align: center;
+        }
+        .input-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #5f3f28;
+            margin-bottom: 6px;
+            background: #e7d6bf;
+            padding: 4px 12px;
+            border-radius: 40px;
+            letter-spacing: 1px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 16px 8px;
+            font-size: 2rem;
+            text-align: center;
+            font-weight: 600;
+            background: #fef8ed;
+            border: 3px solid #bb9b77;
+            border-radius: 28px;
+            color: #3a281c;
+            outline: none;
+            transition: 0.15s;
+            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.05);
+        }
+        .input-group input:focus {
+            border-color: #8b6f50;
+            background: #fffcf4;
+            box-shadow: 0 0 0 5px rgba(187, 155, 119, 0.3);
+        }
+        .input-group input[type=number]::-webkit-inner-spin-button,
+        .input-group input[type=number]::-webkit-outer-spin-button {
+            opacity: 0.6;
+            height: 32px;
+        }
+        .button-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+            margin: 28px 0 22px;
+        }
+        .btn {
+            background: #a58362;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fdf1e2;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #5e3e28, 0 6px 16px rgba(0,0,0,0.2);
+            transition: 0.07s ease-out;
+            border: 2px solid #eecbad;
+            letter-spacing: 2px;
+            flex: 0 1 auto;
+        }
+        .btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #5e3e28, 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .btn-secondary {
+            background: #b7a287;
+            box-shadow: 0 6px 0 #6b4f38;
+            font-size: 1.2rem;
+            padding: 12px 24px;
+        }
+        .result-card {
+            background: #eadbc8;
+            border-radius: 48px;
+            padding: 28px 20px;
+            border: 4px solid #c9ad8a;
+            box-shadow: inset 0 2px 8px #aa8b67, 0 12px 18px -8px rgba(70, 40, 20, 0.4);
+        }
+        .single-result {
+            border-bottom: 2px dashed #b2906b;
+            padding-bottom: 24px;
+            margin-bottom: 16px;
+        }
+        .result-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #311e12;
+            text-align: center;
+            margin-bottom: 8px;
+            background: #f7e8d4;
+            display: inline-block;
+            padding: 4px 32px;
+            border-radius: 40px;
+            letter-spacing: 2px;
+            border: 2px solid #b2906b;
+        }
+        .result-name {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: #422f1d;
+            line-height: 1.2;
+            margin: 4px 0 8px;
+            text-shadow: 3px 3px 0 #dabb97;
+            letter-spacing: 8px;
+        }
+        .basic-info {
+            background: #f3e5d3;
+            border-radius: 40px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border: 2px solid #b3926e;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px 24px;
+            font-size: 1.1rem;
+            color: #2d1d0f;
+        }
+        .basic-info span {
+            background: #dccbb4;
+            padding: 4px 16px;
+            border-radius: 30px;
+            white-space: nowrap;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-right: 8px;
+            background: #7c5f44;
+            color: #f7e5cf;
+            vertical-align: middle;
+        }
+        .short-desc {
+            font-size: 1.2rem;
+            background: #fcf3e5;
+            border-radius: 50px;
+            padding: 12px 22px;
+            border: 3px solid #b3926e;
+            color: #2d1d0f;
+            margin: 12px 0 10px;
+            text-align: center;
+        }
+        .long-poem {
+            background: #efddcc;
+            border-radius: 36px;
+            padding: 18px 22px;
+            border: 3px solid #a58362;
+            color: #2b1c0e;
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+            text-align: center;
+            box-shadow: inset 0 1px 6px #7c5f44;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+        .double-result {
+            margin-top: 20px;
+            border-top: 2px dashed #b2906b;
+            padding-top: 16px;
+        }
+        .double-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #3e2a19;
+            background: #dccbb4;
+            display: inline-block;
+            padding: 4px 28px;
+            border-radius: 40px;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .double-comb {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #532e1a;
+            text-align: center;
+            background: #f5e8d4;
+            padding: 8px 16px;
+            border-radius: 48px;
+            border: 2px solid #b3926e;
+            margin: 10px 0;
+        }
+        .double-meaning {
+            font-size: 1.2rem;
+            background: #f2e2ce;
+            border-radius: 36px;
+            padding: 18px 22px;
+            border: 3px solid #a58362;
+            color: #2d1d0f;
+            line-height: 1.6;
+            text-align: center;
+            box-shadow: inset 0 1px 6px #7c5f44;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 24px;
+            color: #7a644b;
+            font-size: 0.95rem;
+            background: #f1e6d8;
+            padding: 6px 12px;
+            border-radius: 40px;
+        }
+        .error-message {
+            color: #b13e3e;
+            font-weight: 600;
+            background: #ffd9b5;
+            border-radius: 30px;
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #b15535;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>⚡小六壬·雙宮⚡</h1>
+        <div class="subhead">月·日·時 三數 · 詳解單宮屬性與詩訣</div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label>🌙 月 (數一)</label>
+                <input type="number" id="num1" min="1" value="4" step="1" placeholder="月">
+            </div>
+            <div class="input-group">
+                <label>🌞 日 (數二)</label>
+                <input type="number" id="num2" min="1" value="3" step="1" placeholder="日">
+            </div>
+            <div class="input-group">
+                <label>⏰ 時 (數三)</label>
+                <input type="number" id="num3" min="1" value="4" step="1" placeholder="時">
+            </div>
+        </div>
+
+        <div class="button-section">
+            <button class="btn" id="calcBtn">🔮 占 卜</button>
+            <button class="btn btn-secondary" id="randomBtn">🎲 隨 機</button>
+        </div>
+
+        <!-- 結果顯示區 -->
+        <div class="result-card" id="resultCard">
+            <!-- 單宮結果 (時宮) 詳細資訊 -->
+            <div class="single-result">
+                <span class="result-title">📌 單宮 · 時辰落位</span>
+                <div class="result-name" id="resultName">速喜</div>
+                
+                <!-- 五行、顏色、方位、臨神、主數 -->
+                <div class="basic-info" id="basicInfo">
+                    <span>五行：火</span>
+                    <span>顏色：紅色</span>
+                    <span>方位：南方</span>
+                    <span>臨神：朱雀</span>
+                    <span>主數：三、六、九</span>
+                </div>
+
+                <!-- 吉凶標籤 + 簡要說明 (原本的短描述) -->
+                <div class="short-desc" id="shortDesc">
+                    <span class="badge">🟢 吉</span> 人便至時 · 主喜事將近，迅速如意。
+                </div>
+
+                <!-- 傳統斷事長詩 -->
+                <div class="long-poem" id="longPoem">
+                    速喜喜臨鄉，求財往南方，失物申午未，逢人路尋詳，<br>
+                    官事有福德，病者無大傷。六畜田稼慶，行人有音向，<br>
+                    丟失得音信，微樂在面上，出行遇吉利，小喜而順當。<br>
+                    辦事如逢春，吉利又榮光，小量可求借，大事難全強，<br>
+                    久病見小愈，得病速回康，尋人得知見，口舌見消亡，<br>
+                    交易可得成，但不太久長，求財有十分，吉時得順當。
+                </div>
+            </div>
+
+            <!-- 雙宮結果 (日宮 + 時宮) -->
+            <div class="double-result">
+                <div style="text-align: center;">
+                    <span class="double-title">⚖️ 雙宮斷事 (日 + 時)</span>
+                </div>
+                <div class="double-comb" id="doubleComb">空亡 + 速喜</div>
+                <div class="double-meaning" id="doubleMeaning">
+                    事事怨自己，婚姻有一定，失物在家裡。
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            ⏳ 從大安起數 · 月→日→時 · 雙宮合參更精準
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- 六宮完整資料 ----------
+            const GUA_LIST = [
+                { 
+                    name: '大安', luck: '吉', element: '木', color: '青色', direction: '東方', deity: '青龍', mainNumbers: '一、五、七',
+                    shortDesc: '身不動時 · 主平安順利，宜靜不宜動。',
+                    longPoem: `大安事事昌，求財在坤方，失物去不遠，宅舍保安康，
+行人身未動，病者主無妨。將軍回田野，仔細與推詳，
+丟失在附近，可能西南向，安居得吉日，不可動身祥。
+辦事別出屋，求借邀自房，得病兇化吉，久疾得安康，
+尋人知音信，可能歸村莊。口舌能消散，遠行要提防，
+交易別出村，離屯細推詳，求財有八分，得全不出房。`
+                },
+                { 
+                    name: '留連', luck: '凶', element: '水', color: '黑色', direction: '北方', deity: '玄武', mainNumbers: '二、八、十',
+                    shortDesc: '卒未歸時 · 主拖延反覆，事難成就。',
+                    longPoem: `留連事未當，求事日莫光，凡事只宜緩，去者未迴向，
+失物南方去，急急行便訪。緊記防口舌，人口且平祥，
+丟失難尋找，竊者又轉場，出行定不歸，久去拖延長。
+辦事不果斷，牽連又返往，求借不易成，被求而徬徨，
+此日患疾病，幾天不復康。找人迷霧中，迷迷又恍惚，
+口舌繼續有，拖拉又伸長，女方嫁吉日，求財六分量。`
+                },
+                { 
+                    name: '速喜', luck: '吉', element: '火', color: '紅色', direction: '南方', deity: '朱雀', mainNumbers: '三、六、九',
+                    shortDesc: '人便至時 · 主喜事將近，迅速如意。',
+                    longPoem: `速喜喜臨鄉，求財往南方，失物申午未，逢人路尋詳，
+官事有福德，病者無大傷。六畜田稼慶，行人有音向，
+丟失得音信，微樂在面上，出行遇吉利，小喜而順當。
+辦事如逢春，吉利又榮光，小量可求借，大事難全強，
+久病見小愈，得病速回康，尋人得知見，口舌見消亡，
+交易可得成，但不太久長，求財有十分，吉時得順當。`
+                },
+                { 
+                    name: '赤口', luck: '凶', element: '金', color: '白色', direction: '西方', deity: '白虎', mainNumbers: '四、七、十',
+                    shortDesc: '官事凶時 · 主口舌是非，宜慎言。',
+                    longPoem: `赤口主口傷，官事且緊防，失物急去找，行人有驚慌，
+雞犬多作怪，病者上西方。更須防咒咀，恐怕染瘟殃，
+找物犯謊口，尋問無音向，出門千口怨，言談萬罵傷。
+辦事犯口舌，難成有阻擋，求借不全順，閉口無事張，
+得病千口猜，求醫還無妨。尋人得兇音，人心不安詳，
+口舌犯最重，交易口舌防，求財只四分，逢吉才成當。`
+                },
+                { 
+                    name: '小吉', luck: '吉', element: '木', color: '青色', direction: '東方', deity: '六合', mainNumbers: '一、五、七',
+                    shortDesc: '人來喜時 · 主貴人相助，和合大吉。',
+                    longPoem: `小吉最吉昌，路上好商量，陰人來報喜，失物在坤方，
+行人立刻至，交易甚是強。凡事皆合好，病者保安康，
+大吉又大順，萬事如意詳，出行可得喜，千里吉安詳。
+諸事可心順，有憂皆消光，求借自來助，眾友願相幫，
+重病莫要愁，久病得安康。不見得相見，不打自歸莊，
+千人稱讚君，無限上榮光，交易成興隆，十二分財量。`
+                },
+                { 
+                    name: '空亡', luck: '凶', element: '土', color: '黃色', direction: '中央', deity: '勾陳', mainNumbers: '三、六、九',
+                    shortDesc: '信音稀時 · 主謀事落空，枉費心力。',
+                    longPoem: `空亡事不長，陰人無主張，求財心白費，行人有災殃，
+失物永不見，官事有刑傷。病人遇邪鬼，久病添禍殃，
+失物難找見，找尋空蕩盪，出行不吉利，兇多不吉祥。
+辦事兇為多，處處有阻擋，求借不能成，成事化敗傷，
+得病兇多噩，久患雪加霜。尋人無音信，知音變空想，
+萬口都誹罵，小舟遭狂浪，求財有二分，不吉不利亡。`
+                }
+            ];
+
+            // ----- 雙宮斷詞映射表 (日宮_時宮) -----
+            const DOUBLE_MEANINGS = {
+                "大安_留連": "辦事不周全，失物西北去，婚姻晚幾天。",
+                "大安_速喜": "辦事自己起，失物當天見，婚姻自己提。",
+                "大安_赤口": "辦事不順手，失物不用找，婚姻兩分手。",
+                "大安_小吉": "事事從己及，失物不出門，婚姻成就地。",
+                "大安_空亡": "病人要上床，失物無蹤影，事事宜順情。",
+                "留連_大安": "辦事兩分張，婚姻有喜事，先苦後來甜。",
+                "留連_速喜": "事事由自己，婚姻有誠意，失物三天里。",
+                "留連_赤口": "病者死人口，失物准丟失，婚姻兩分手。",
+                "留連_小吉": "事事不用提，失物東南去，病者出人齊。",
+                "留連_空亡": "病人准死亡，失物不見面，婚姻分兩張。",
+                "速喜_赤口": "自己往外走，失物去正北，婚姻得勤走。",
+                "速喜_小吉": "婚姻有人提，病人當天好，失物在家裡。",
+                "速喜_空亡": "婚姻有分張，病人積極治，失物不久見。",
+                "速喜_大安": "事事都平安，婚姻成全了，占病都相安。",
+                "速喜_留連": "婚姻不可言，失物無信息，病人有仙緣。",
+                "赤口_小吉": "辦事自己提，婚姻不能成，失物無信息。",
+                "赤口_空亡": "無病也上床，失物不用找，婚姻不能成。",
+                "赤口_大安": "辦事險和難，失物東北找，婚姻指定難。",
+                "赤口_留連": "辦事有困難，行人往外走，失物不回還。",
+                "赤口_速喜": "婚姻在自己，失物有著落，辦事官事起。",
+                "小吉_空亡": "病人不妥當，失物正東找，婚姻再想想。",
+                "小吉_大安": "事事兩周全，婚姻當日定，失物自己損。",
+                "小吉_留連": "事事有返還，婚姻有人破，失物上西南。",
+                "小吉_速喜": "事事從頭起，婚姻能成就，失物在院裡。",
+                "小吉_赤口": "辦事往外走，婚姻有難處，失物丟了手。",
+                "空亡_大安": "事事不周全，婚姻從和好，失物反覆間。",
+                "空亡_留連": "辦事處處難，婚姻從新定，失物永不還。",
+                "空亡_速喜": "事事怨自己，婚姻有一定，失物在家裡。",
+                "空亡_赤口": "辦事官非有，婚姻難定準，失物往遠走。",
+                "空亡_小吉": "事事有猜疑，婚姻有喜事，失物在家裡。"
+            };
+
+            // 輸入框
+            const num1Input = document.getElementById('num1');
+            const num2Input = document.getElementById('num2');
+            const num3Input = document.getElementById('num3');
+            const calcBtn = document.getElementById('calcBtn');
+            const randomBtn = document.getElementById('randomBtn');
+
+            // 顯示元素
+            const resultName = document.getElementById('resultName');
+            const basicInfo = document.getElementById('basicInfo');
+            const shortDesc = document.getElementById('shortDesc');
+            const longPoem = document.getElementById('longPoem');
+            const doubleComb = document.getElementById('doubleComb');
+            const doubleMeaning = document.getElementById('doubleMeaning');
+
+            // ----- 核心計算：給三個正整數，回傳 [日宮索引, 時宮索引] -----
+            function computeIndexes(month, day, hour) {
+                month = Math.max(1, Math.floor(Number(month))) || 1;
+                day   = Math.max(1, Math.floor(Number(day)))   || 1;
+                hour  = Math.max(1, Math.floor(Number(hour))) || 1;
+
+                let monthIdx = (0 + month - 1) % 6;        // 月宮 (中間結果)
+                let dayIdx   = (monthIdx + day - 1) % 6;   // 日宮
+                let hourIdx  = (dayIdx + hour - 1) % 6;    // 時宮
+                return [dayIdx, hourIdx];
+            }
+
+            // ----- 更新畫面：根據日宮、時宮索引 -----
+            function updateDisplay(dayIdx, hourIdx) {
+                // 時宮詳細 (單宮)
+                const hGua = GUA_LIST[hourIdx];
+                resultName.innerText = hGua.name;
+
+                // 基本資訊：五行、顏色、方位、臨神、主數
+                basicInfo.innerHTML = `
+                    <span>五行：${hGua.element}</span>
+                    <span>顏色：${hGua.color}</span>
+                    <span>方位：${hGua.direction}</span>
+                    <span>臨神：${hGua.deity}</span>
+                    <span>主數：${hGua.mainNumbers}</span>
+                `;
+
+                // 吉凶 + 短描述
+                let luckTag = hGua.luck === '吉' ? '🟢 吉' : '🔴 凶';
+                shortDesc.innerHTML = `<span class="badge">${luckTag}</span> ${hGua.shortDesc}`;
+
+                // 長詩 (保留原本格式)
+                longPoem.innerText = hGua.longPoem;  // 使用 innerText 保留 \n 換行，配合 white-space: pre-line
+
+                // 雙宮部分
+                const dGua = GUA_LIST[dayIdx];
+                const key = dGua.name + '_' + hGua.name;
+                const doubleText = DOUBLE_MEANINGS[key];
+
+                doubleComb.innerText = `${dGua.name} + ${hGua.name}`;
+                if (doubleText) {
+                    doubleMeaning.innerText = doubleText;
+                } else {
+                    doubleMeaning.innerText = `［暫無專用雙宮斷詞，請綜合單宮涵義］\n日宮${dGua.name}＋時宮${hGua.name}，可參考各自單宮詩訣。`;
+                }
+            }
+
+            // ----- 從輸入框取值，計算並更新 -----
+            function calculateFromInputs() {
+                let v1 = num1Input.value.trim();
+                let v2 = num2Input.value.trim();
+                let v3 = num3Input.value.trim();
+
+                if (v1 === '') v1 = '1';
+                if (v2 === '') v2 = '1';
+                if (v3 === '') v3 = '1';
+
+                let n1 = Number(v1);
+                let n2 = Number(v2);
+                let n3 = Number(v3);
+
+                if (isNaN(n1) || !Number.isInteger(n1) || n1 < 1 ||
+                    isNaN(n2) || !Number.isInteger(n2) || n2 < 1 ||
+                    isNaN(n3) || !Number.isInteger(n3) || n3 < 1) {
+                    resultName.innerText = '⚠️';
+                    basicInfo.innerHTML = '<span>輸入錯誤</span>';
+                    shortDesc.innerHTML = `<span class="badge" style="background:#b15535;">錯誤</span> 請輸入大於或等於1的整數。`;
+                    longPoem.innerText = '';
+                    doubleComb.innerText = '--';
+                    doubleMeaning.innerText = '無法組合，請修正輸入。';
+                    return;
+                }
+
+                const [dayIdx, hourIdx] = computeIndexes(n1, n2, n3);
+                updateDisplay(dayIdx, hourIdx);
+            }
+
+            // ----- 隨機填入1~9的數字 -----
+            function setRandomNumbers() {
+                const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+                num1Input.value = rand(1, 9);
+                num2Input.value = rand(1, 9);
+                num3Input.value = rand(1, 9);
+                calculateFromInputs();
+            }
+
+            // ----- 綁定事件 -----
+            calcBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                calculateFromInputs();
+            });
+
+            randomBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                setRandomNumbers();
+            });
+
+            [num1Input, num2Input, num3Input].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        calculateFromInputs();
+                    }
+                });
+            });
+
+            // 頁面載入時以預設值(4,3,4)計算 (四月初三卯時)
+            window.addEventListener('load', function() {
+                calculateFromInputs();
+            });
+        })();
+    </script>
+</body>
+</html>
