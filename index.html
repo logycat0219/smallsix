@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小六壬 · 雙宮合參 · 詳解</title>
+    <title>小六壬 · 三數/四數靈活占 · 單宮雙宮並用</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,7 +19,7 @@
             padding: 16px;
         }
         .card {
-            max-width: 820px;
+            max-width: 860px;
             width: 100%;
             background: rgba(255, 248, 235, 0.95);
             backdrop-filter: blur(4px);
@@ -50,13 +50,13 @@
         .input-section {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: center;
             gap: 16px;
             margin-bottom: 32px;
         }
         .input-group {
             flex: 1 1 100px;
-            min-width: 80px;
+            min-width: 70px;
             text-align: center;
         }
         .input-group label {
@@ -271,25 +271,37 @@
             border: 2px solid #b15535;
             margin-top: 10px;
         }
+        .mode-badge {
+            font-size: 0.9rem;
+            background: #9e7f60;
+            color: #fcf0e0;
+            border-radius: 30px;
+            padding: 4px 16px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>⚡小六壬·雙宮⚡</h1>
-        <div class="subhead">月·日·時 三數 · 詳解單宮屬性與詩訣</div>
+        <h1>⚡小六壬·兼時分⚡</h1>
+        <div class="subhead">月·日·時·分 靈活取用 · 三數雙宮／四數單宮</div>
 
         <div class="input-section">
             <div class="input-group">
-                <label>🌙 月 (數一)</label>
+                <label>🌙 月</label>
                 <input type="number" id="num1" min="1" value="4" step="1" placeholder="月">
             </div>
             <div class="input-group">
-                <label>🌞 日 (數二)</label>
+                <label>🌞 日</label>
                 <input type="number" id="num2" min="1" value="3" step="1" placeholder="日">
             </div>
             <div class="input-group">
-                <label>⏰ 時 (數三)</label>
+                <label>⏰ 時</label>
                 <input type="number" id="num3" min="1" value="4" step="1" placeholder="時">
+            </div>
+            <div class="input-group">
+                <label>⏱️ 分</label>
+                <input type="number" id="num4" min="1" value="" step="1" placeholder="(選填)">
             </div>
         </div>
 
@@ -300,9 +312,9 @@
 
         <!-- 結果顯示區 -->
         <div class="result-card" id="resultCard">
-            <!-- 單宮結果 (時宮) 詳細資訊 -->
+            <!-- 單宮結果 (三數為時宮 / 四數為分宮) -->
             <div class="single-result">
-                <span class="result-title">📌 單宮 · 時辰落位</span>
+                <span class="result-title" id="singleTitle">📌 單宮 · 時辰落位</span>
                 <div class="result-name" id="resultName">速喜</div>
                 
                 <!-- 五行、顏色、方位、臨神、主數 -->
@@ -314,7 +326,7 @@
                     <span>主數：三、六、九</span>
                 </div>
 
-                <!-- 吉凶標籤 + 簡要說明 (原本的短描述) -->
+                <!-- 吉凶標籤 + 簡要說明 -->
                 <div class="short-desc" id="shortDesc">
                     <span class="badge">🟢 吉</span> 人便至時 · 主喜事將近，迅速如意。
                 </div>
@@ -330,10 +342,10 @@
                 </div>
             </div>
 
-            <!-- 雙宮結果 (日宮 + 時宮) -->
-            <div class="double-result">
+            <!-- 雙宮結果 (僅三數模式顯示) / 四數模式提示 -->
+            <div class="double-result" id="doubleSection">
                 <div style="text-align: center;">
-                    <span class="double-title">⚖️ 雙宮斷事 (日 + 時)</span>
+                    <span class="double-title" id="doubleTitle">⚖️ 雙宮斷事 (日 + 時)</span>
                 </div>
                 <div class="double-comb" id="doubleComb">空亡 + 速喜</div>
                 <div class="double-meaning" id="doubleMeaning">
@@ -343,7 +355,7 @@
         </div>
 
         <div class="footer-note">
-            ⏳ 從大安起數 · 月→日→時 · 雙宮合參更精準
+            ⏳ 填寫三數(月日時)得雙宮；填寫四數(月日時分)則以分宮為主，僅觀單宮。
         </div>
     </div>
 
@@ -413,7 +425,7 @@
                 }
             ];
 
-            // ----- 雙宮斷詞映射表 (日宮_時宮) -----
+            // ----- 雙宮斷詞映射表 (日宮_時宮) 僅三數模式使用 -----
             const DOUBLE_MEANINGS = {
                 "大安_留連": "辦事不周全，失物西北去，婚姻晚幾天。",
                 "大安_速喜": "辦事自己起，失物當天見，婚姻自己提。",
@@ -451,36 +463,55 @@
             const num1Input = document.getElementById('num1');
             const num2Input = document.getElementById('num2');
             const num3Input = document.getElementById('num3');
+            const num4Input = document.getElementById('num4');
             const calcBtn = document.getElementById('calcBtn');
             const randomBtn = document.getElementById('randomBtn');
 
             // 顯示元素
+            const singleTitle = document.getElementById('singleTitle');
             const resultName = document.getElementById('resultName');
             const basicInfo = document.getElementById('basicInfo');
             const shortDesc = document.getElementById('shortDesc');
             const longPoem = document.getElementById('longPoem');
+            const doubleSection = document.getElementById('doubleSection');
+            const doubleTitle = document.getElementById('doubleTitle');
             const doubleComb = document.getElementById('doubleComb');
             const doubleMeaning = document.getElementById('doubleMeaning');
 
-            // ----- 核心計算：給三個正整數，回傳 [日宮索引, 時宮索引] -----
-            function computeIndexes(month, day, hour) {
+            // ----- 計算三數：回傳 [日宮索引, 時宮索引] -----
+            function computeThreeIndexes(month, day, hour) {
                 month = Math.max(1, Math.floor(Number(month))) || 1;
                 day   = Math.max(1, Math.floor(Number(day)))   || 1;
                 hour  = Math.max(1, Math.floor(Number(hour))) || 1;
 
-                let monthIdx = (0 + month - 1) % 6;        // 月宮 (中間結果)
+                let monthIdx = (0 + month - 1) % 6;        // 月宮
                 let dayIdx   = (monthIdx + day - 1) % 6;   // 日宮
                 let hourIdx  = (dayIdx + hour - 1) % 6;    // 時宮
                 return [dayIdx, hourIdx];
             }
 
-            // ----- 更新畫面：根據日宮、時宮索引 -----
-            function updateDisplay(dayIdx, hourIdx) {
-                // 時宮詳細 (單宮)
+            // ----- 計算四數：回傳分宮索引 -----
+            function computeFourIndex(month, day, hour, minute) {
+                month = Math.max(1, Math.floor(Number(month))) || 1;
+                day   = Math.max(1, Math.floor(Number(day)))   || 1;
+                hour  = Math.max(1, Math.floor(Number(hour))) || 1;
+                minute= Math.max(1, Math.floor(Number(minute)))|| 1;
+
+                let monthIdx = (0 + month - 1) % 6;
+                let dayIdx   = (monthIdx + day - 1) % 6;
+                let hourIdx  = (dayIdx + hour - 1) % 6;
+                let minuteIdx= (hourIdx + minute - 1) % 6;   // 分宮
+                return minuteIdx;
+            }
+
+            // ----- 更新畫面 (根據模式) -----
+            function updateDisplayThree(dayIdx, hourIdx) {
+                // 單宮顯示時宮
                 const hGua = GUA_LIST[hourIdx];
                 resultName.innerText = hGua.name;
+                singleTitle.innerText = '📌 單宮 · 時辰落位';
 
-                // 基本資訊：五行、顏色、方位、臨神、主數
+                // 基本資訊
                 basicInfo.innerHTML = `
                     <span>五行：${hGua.element}</span>
                     <span>顏色：${hGua.color}</span>
@@ -489,62 +520,97 @@
                     <span>主數：${hGua.mainNumbers}</span>
                 `;
 
-                // 吉凶 + 短描述
                 let luckTag = hGua.luck === '吉' ? '🟢 吉' : '🔴 凶';
                 shortDesc.innerHTML = `<span class="badge">${luckTag}</span> ${hGua.shortDesc}`;
+                longPoem.innerText = hGua.longPoem;
 
-                // 長詩 (保留原本格式)
-                longPoem.innerText = hGua.longPoem;  // 使用 innerText 保留 \n 換行，配合 white-space: pre-line
-
-                // 雙宮部分
+                // 雙宮區域正常顯示 (日宮 + 時宮)
+                doubleSection.style.display = 'block';
+                doubleTitle.innerText = '⚖️ 雙宮斷事 (日 + 時)';
                 const dGua = GUA_LIST[dayIdx];
                 const key = dGua.name + '_' + hGua.name;
                 const doubleText = DOUBLE_MEANINGS[key];
-
                 doubleComb.innerText = `${dGua.name} + ${hGua.name}`;
-                if (doubleText) {
-                    doubleMeaning.innerText = doubleText;
-                } else {
-                    doubleMeaning.innerText = `［暫無專用雙宮斷詞，請綜合單宮涵義］\n日宮${dGua.name}＋時宮${hGua.name}，可參考各自單宮詩訣。`;
-                }
+                doubleMeaning.innerText = doubleText || `［暫無專用雙宮詞］日宮${dGua.name}＋時宮${hGua.name}，可參考單宮涵義。`;
             }
 
-            // ----- 從輸入框取值，計算並更新 -----
+            function updateDisplayFour(minuteIdx) {
+                // 單宮顯示分宮
+                const mGua = GUA_LIST[minuteIdx];
+                resultName.innerText = mGua.name;
+                singleTitle.innerText = '📌 單宮 · 分辰落位 (四數)';
+
+                basicInfo.innerHTML = `
+                    <span>五行：${mGua.element}</span>
+                    <span>顏色：${mGua.color}</span>
+                    <span>方位：${mGua.direction}</span>
+                    <span>臨神：${mGua.deity}</span>
+                    <span>主數：${mGua.mainNumbers}</span>
+                `;
+
+                let luckTag = mGua.luck === '吉' ? '🟢 吉' : '🔴 凶';
+                shortDesc.innerHTML = `<span class="badge">${luckTag}</span> ${mGua.shortDesc}`;
+                longPoem.innerText = mGua.longPoem;
+
+                // 雙宮區域改為四數提示
+                doubleSection.style.display = 'block';
+                doubleTitle.innerText = '⏱️ 四數占卜 (無雙宮)';
+                doubleComb.innerText = '—— 四數起課 ——';
+                doubleMeaning.innerText = '您使用了月、日、時、分四數，此模式僅以分宮單宮斷事，請參閱上方單宮詳解。';
+            }
+
+            // ----- 從輸入框取值並判斷模式 -----
             function calculateFromInputs() {
                 let v1 = num1Input.value.trim();
                 let v2 = num2Input.value.trim();
                 let v3 = num3Input.value.trim();
+                let v4 = num4Input.value.trim();
 
                 if (v1 === '') v1 = '1';
                 if (v2 === '') v2 = '1';
                 if (v3 === '') v3 = '1';
+                // v4 可為空，不做預設
 
                 let n1 = Number(v1);
                 let n2 = Number(v2);
                 let n3 = Number(v3);
+                let n4 = v4 === '' ? null : Number(v4);
 
+                // 前三個必須是有效整數>=1
                 if (isNaN(n1) || !Number.isInteger(n1) || n1 < 1 ||
                     isNaN(n2) || !Number.isInteger(n2) || n2 < 1 ||
                     isNaN(n3) || !Number.isInteger(n3) || n3 < 1) {
+                    // 錯誤顯示
                     resultName.innerText = '⚠️';
                     basicInfo.innerHTML = '<span>輸入錯誤</span>';
                     shortDesc.innerHTML = `<span class="badge" style="background:#b15535;">錯誤</span> 請輸入大於或等於1的整數。`;
                     longPoem.innerText = '';
                     doubleComb.innerText = '--';
-                    doubleMeaning.innerText = '無法組合，請修正輸入。';
+                    doubleMeaning.innerText = '請修正輸入。';
                     return;
                 }
 
-                const [dayIdx, hourIdx] = computeIndexes(n1, n2, n3);
-                updateDisplay(dayIdx, hourIdx);
+                // 檢查第四個是否有效 (存在且整數>=1)
+                const fourMode = (n4 !== null && !isNaN(n4) && Number.isInteger(n4) && n4 >= 1);
+
+                if (fourMode) {
+                    // 四數模式
+                    const minuteIdx = computeFourIndex(n1, n2, n3, n4);
+                    updateDisplayFour(minuteIdx);
+                } else {
+                    // 三數模式 (第四個無效或空白)
+                    const [dayIdx, hourIdx] = computeThreeIndexes(n1, n2, n3);
+                    updateDisplayThree(dayIdx, hourIdx);
+                }
             }
 
-            // ----- 隨機填入1~9的數字 -----
+            // ----- 隨機填入1~9 (四個全填) -----
             function setRandomNumbers() {
                 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
                 num1Input.value = rand(1, 9);
                 num2Input.value = rand(1, 9);
                 num3Input.value = rand(1, 9);
+                num4Input.value = rand(1, 9);   // 分也給隨機
                 calculateFromInputs();
             }
 
@@ -559,7 +625,7 @@
                 setRandomNumbers();
             });
 
-            [num1Input, num2Input, num3Input].forEach(input => {
+            [num1Input, num2Input, num3Input, num4Input].forEach(input => {
                 input.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         e.preventDefault();
@@ -568,12 +634,13 @@
                 });
             });
 
-            // 頁面載入時以預設值(4,3,4)計算 (四月初三卯時)
+            // 頁面載入: 預設4,3,4，第四個留空 → 三數模式
             window.addEventListener('load', function() {
+                // 確保第四個為空
+                num4Input.value = '';
                 calculateFromInputs();
             });
         })();
     </script>
 </body>
-
 </html>
